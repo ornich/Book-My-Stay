@@ -1,38 +1,77 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Book My Stay Application
- * Use Case 1: Application Entry & Welcome Message
+ * Use Case 3: Centralized Room Inventory Management
  *
- * This class represents the entry point of the Hotel Booking
- * Management System. When the program starts, it prints
- * a welcome message along with the application name
- * and version information.
+ * This program demonstrates how a HashMap can be used to manage
+ * room availability in a centralized inventory system.
+ *
+ * Version: 3.1 (Refactored)
  *
  * @author Nithil
- * @version 1.0
  */
 
+/* Room Inventory Class */
+class RoomInventory {
+
+    private HashMap<String, Integer> inventory;
+
+    /* Constructor initializes room availability */
+    public RoomInventory() {
+        inventory = new HashMap<>();
+
+        inventory.put("Single Room", 10);
+        inventory.put("Double Room", 5);
+        inventory.put("Suite Room", 2);
+    }
+
+    /* Get availability for a room type */
+    public int getAvailability(String roomType) {
+        return inventory.getOrDefault(roomType, 0);
+    }
+
+    /* Update availability */
+    public void updateAvailability(String roomType, int count) {
+        inventory.put(roomType, count);
+    }
+
+    /* Display complete inventory */
+    public void displayInventory() {
+        System.out.println("----- Current Room Inventory -----");
+
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue() + " rooms available");
+        }
+
+        System.out.println("----------------------------------");
+    }
+}
+
+/* Main Application Class */
 public class HotelBookingApp {
 
-    /**
-     * Main method - Entry point of the Java application.
-     * The JVM starts execution from this method.
-     *
-     * @param args Command line arguments
-     */
     public static void main(String[] args) {
 
-        // Display welcome message
         System.out.println("====================================");
         System.out.println("     Welcome to Book My Stay App    ");
         System.out.println("====================================");
+        System.out.println("Version: 3.1\n");
 
-        // Display application details
-        System.out.println("Application Name : Hotel Booking Management System");
-        System.out.println("Version          : v1.0");
+        // Initialize inventory
+        RoomInventory inventory = new RoomInventory();
 
-        // Closing message
-        System.out.println("------------------------------------");
-        System.out.println("Application started successfully!");
-        System.out.println("------------------------------------");
+        // Display inventory
+        inventory.displayInventory();
+
+        // Example: update availability
+        System.out.println("\nUpdating inventory...");
+        inventory.updateAvailability("Single Room", 8);
+
+        // Display updated inventory
+        inventory.displayInventory();
+
+        System.out.println("Application terminated successfully.");
     }
 }
